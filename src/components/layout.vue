@@ -7,14 +7,14 @@
         </router-link>
         <div class="head-nav">
           <ul class="nav-list">
-            <li> </li>
+            <li> {{username}}</li>
             <li class="nav-pile">|</li>
-            <li  >退出</li>
-            <li >登录</li>
+            <li  v-if="username!==''" @click="logout">退出</li>
+            <li @click="logClick" v-if="username==''">登录</li>
             <li class="nav-pile">|</li>
-            <li  >注册</li>
+            <li @click="regClick" >注册</li>
             <li class="nav-pile">|</li>
-            <li >关于</li>
+            <li @click="aboutClick" >关于</li>
           </ul>
         </div>  
       </div>
@@ -28,15 +28,59 @@
     <div class="app-foot">
         <p>© 2016 fishenal MIT</p>
     </div>
+    <my-dialog @on-close="onClose" v-if="isShowAboutDialog">关于我们，这是一个神奇的网站</my-dialog> 
+    <my-dialog @on-close="onClose" v-if="isShowLogDialog">
+      <log-form @has-log="onSuccessLog"></log-form>
+
+    </my-dialog> 
+    <my-dialog @on-close="onClose" v-if="isShowRegDialog">
+      <reg-form></reg-form>
+    </my-dialog> 
+    
   </div>
 </template>
 
 <script>
+import Dialog from '../components/dialog'
+import logForm from '../components/logForm'
+import regForm from '../components/regForm'
 export default {
-  name: 'HelloWorld',
+  components:{
+    myDialog:Dialog,
+    logForm,
+    regForm
+  },
   data () {
     return {
-      msg: 'Welcome 5432532532 to Your Vue.js App'
+      isShowAboutDialog : false,
+      isShowLogDialog : false,
+      isShowRegDialog :false,
+      username:""
+    }
+  },
+  methods:{
+    onClose(){
+   
+      this.isShowAboutDialog = false,
+      this.isShowLogDialog = false,
+      this.isShowRegDialog =false
+    },
+    aboutClick(){
+      this.isShowAboutDialog = true
+    },
+    logClick(){
+      this.isShowLogDialog =  true
+    },
+    regClick(){
+      this.isShowRegDialog = true
+    },
+    onSuccessLog(data){
+      console.log(data)
+      this.username=data.login.username
+      this.isShowLogDialog =  false
+    },
+    logout(){
+      this.username=""
     }
   }
 }
@@ -185,5 +229,17 @@ body {
 .g-form-error {
   color: red;
   padding-left: 15px;
+}
+.drop-enter-active {
+  transition: all 1.5s ease;
+}
+.drop-leave-active {
+  transition: all 1.3s ease;
+}
+.drop-enter {
+  transform: translateY(-500px);
+}
+.drop-leave-active {
+  transform: translateY(-500px);
 }
 </style>
