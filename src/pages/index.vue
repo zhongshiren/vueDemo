@@ -27,7 +27,7 @@
       </div> 
     </div>
    <div class="index-right">
-      <!-- <slide-show :slides="slides" :inv="invTime"></slide-show> -->
+      <slide-show v-bind:slides="slides"></slide-show>
       <div class="index-board-list">
         <div class="index-board-item " v-for="(item, index) in boardList" v-bind:class="[{'line-last' : index % 2!==0},'index-board-'+item.id]">
           <div class="index-board-item-inner">
@@ -44,16 +44,40 @@
 </template>
 
 <script>
+
+import slideShow from '../components/slideShow'
 export default {
+  components:{
+    slideShow
+  },
   created: function(){
-     this.$http.get('static/db.json').then(function(data){
-        console.log(data)
+     this.$http.get('static/db.json').then((res)=>{
+        this.newsList = res.body.data
+        console.log(res," ==========>")
      },function(err){
         console.log(err)
      })
   },
   data () {
     return {
+       slides:[
+           {
+            src:require('../assets/slideShow/pic1.jpg'),
+            title:"xx1"
+           },
+           {
+             src:require('../assets/slideShow/pic2.jpg'),
+            title:"xx2"
+           },
+           {
+             src:require('../assets/slideShow/pic3.jpg'),
+            title:"xx3"
+           },
+           {
+             src:require('../assets/slideShow/pic4.jpg'),
+            title:"xx4"
+           }
+       ],
        boardList: [
             {
               title: '开放产品',
@@ -81,23 +105,7 @@ export default {
             }
        ],
        newsList: [
-            {
-                title: '数据统计',
-                url: 'http://starcraft.com'
-              },
-              {
-                title: '数据预测',
-                url: 'http://warcraft.com'
-              },
-              {
-                title: '流量分析',
-                url: 'http://overwatch.com',
-                hot: true
-              },
-              {
-                title: '广告发布',
-                url: 'http://hearstone.com'
-            } 
+            
        ],
        productList:{
         pc:{
