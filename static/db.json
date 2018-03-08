@@ -1,4 +1,25 @@
 {
-  "title": "数据统计",
-  "url": "http://starcraft.com"
+  "data":[
+    {
+      "title": "数据统计",
+      "url": "http://starcraft.com"
+    },
+    {
+       "title": "数据预测",
+      "url": "http://starcraft.com"
+    },
+    {
+      "title": "流量分析",
+      "url": "http://starcraft.com"
+    },
+    {
+       "title": "广告发布",
+      "url": "http://starcraft.com"
+    }
+],
+  "login":{
+    "username":"zhongshiren@",
+    "password":"66666666"
+  }
+
 }
